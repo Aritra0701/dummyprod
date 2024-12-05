@@ -10,7 +10,6 @@ const Allusers = () => {
         queryFn:api.getAllusers,
         select:(response)=> response.data
     })
-    console.log(allusers)
   
   return (
     <>
