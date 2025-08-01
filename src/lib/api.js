@@ -129,7 +129,69 @@ const api={
             }
         )
     return response
-    }
+    },
+    
+     getAllpost:async()=>{
+        const headers = api.getheaders()
+        const response = await axios.get(
+            `${baseUrl}/posts`,{
+                headers:{
+                    ...headers
+                }
+            }   
+        )
+    return response
+    },
+    postDetails:async(id)=>{
+        const headers = api.getheaders()
+        const response = await axios.get(
+            `${baseUrl}/posts/${id}`,{
+                headers:{
+                    ...headers
+                }
+            }
+        )
+        return response
+    },
+
+ Customcarts:async()=>{
+        const headers = api.getheaders()
+        const response = await axios.get(
+            `${baseUrl}/carts`,{
+                headers:{
+                    ...headers
+                }
+            }
+        )
+        return response
+    },
+
+Commentcard:async()=>{
+    const headers = api.getheaders()
+    const response = await axios.get(
+        `${baseUrl}/comments`,{
+            headers:{
+                ...headers
+            }
+        }
+    )
+    return response
+},
+
+FoodCard:async()=>{
+    const headers = api.getheaders()
+    const response = await axios.get(
+        `${baseUrl}/recipes`,{
+            headers:{
+                ...Headers
+            }
+        }
+    )
+    return response
+}
+
+
+
 
 }
 

@@ -55,9 +55,10 @@ const navListMenuItems = [
     icon: SunIcon,
   },
   {
-    title: "Recipes",
+    title: "post",
     description: "Reach out to us for assistance or inquiries",
     icon: GlobeAmericasIcon,
+    path:"/posts"
   },
   {
     title: "Users",
