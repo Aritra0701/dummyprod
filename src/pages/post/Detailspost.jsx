@@ -1,6 +1,6 @@
-import React from "react";
+// import React from "react";
 import api from "../../lib/api";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import {  useQuery } from "@tanstack/react-query";
 import Layout from "../../components/Layout";
 import { useLocation } from "react-router-dom";
 
@@ -30,12 +30,12 @@ const Detailspost = () => {
         <div className="absolute -left-[40%] top-0 group-hover:rotate-12 transition-all duration-300 group-hover:scale-150">
           <div className="flex gap-1">
             <svg
-              strokelinejoin="round"
-              strokelinecap="round"
-              strokewidth={1}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth={1}
               fill="none"
               viewBox="0 0 24 24"
-              classname="fill-gray-300 rotate- [24deg]"
+              className="fill-gray-300 rotate- [24deg]"
               height={200}
               width={200}
               xmlns="http://www.w3.org/2000/svg"

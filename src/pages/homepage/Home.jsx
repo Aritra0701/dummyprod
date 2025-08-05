@@ -11,12 +11,12 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 // import { button } from "@material-tailwind/react";
 
-import { useState } from "react";
+// import { useState } from "react";
 import "swiper/css";
-// import "swiper/css/pagination";
-// import card from "@material-tailwind/react/theme/components/card";
 import { Rating, Typography } from "@material-tailwind/react";
 import { Heart, HandPlatter, Timer } from "lucide-react";
+import { motion } from "motion/react";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const Home = () => {
     },
   ];
 
-  const { data: Castomcarts } = useQuery({
+  const { data: Customcarts } = useQuery({
     queryKey: ["carts"],
     queryFn: api.Customcarts,
     select: (response) => response.data,
@@ -78,22 +78,91 @@ const Home = () => {
     select: (response) => response.data,
   });
 
+  const { data: QutPart } = useQuery({
+    queryKey: ["quotes"],
+    queryFn: api.QutPart,
+    select: (response) => response.data,
+  });
+
+  const { data: todPart } = useQuery({
+    queryKey: ["todos"],
+    queryFn: api.todPart,
+    select: (response) => response.data,
+  });
+
+
+  console.log(todPart)
   // const [rated, setRated] = useState(8);
   // console.log(Castomcarts)
 
   // console.log(Commentcard);
   // console.log(FoodCard);
+  const letterVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1, // delay each letter
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    }),
+  };
+
+  const letters = "Banner Home Page Off Line Test".split("");
 
   return (
     <>
       <Layout>
-        <div className="banner">
+        <div className="">
+          <div className="box">
+            <img src="" />
+            <h2>Lorem, ipsum.</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Similique, dolore.
+            </p>
+          </div>
+        </div>
+
+        {/* motions_banner_part */}
+        <div className="banner relative">
           <img
             className="h-screen object-cover w-full"
             src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg"
           />
+          <div className="top_part flex justify-center mx-auto absolute top-0 bottom-0 left-0 right-0 translate-y-1/2">
+            <div className="">
+              <motion.h2
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 2 }}
+                viewport={{ once: true }} //animation only one
+                className="text-6xl font-serif font-semibold py-5 text-white"
+              >
+                Lorem ipsum dolor sit met.
+              </motion.h2>
+            </div>
+
+            <div className="flex gap-1 text-4xl font-bold text-blue-600">
+              {letters.map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariant}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block text-white"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </div>
+          </div>
         </div>
 
+        {/* photo-preview_section */}
         <div className="img_section py-10">
           <PhotoProvider>
             <Swiper
@@ -129,9 +198,9 @@ const Home = () => {
           </PhotoProvider>
         </div>
 
-        {/* map inner ar modha mapp */}
+        {/* map inner ar inner map_pagination */}
         <div className="grid grid-cols-5 grid-rows-5 gap-4 px-5 mx-auto">
-          {Castomcarts?.carts?.map((allcard, index) => (
+          {Customcarts?.carts?.map((allcard, index) => (
             <>
               {allcard.products.map((items, index) => (
                 <div
@@ -156,7 +225,6 @@ const Home = () => {
         </div>
 
         {/* comment section */}
-
         <div className="comment_section py-20">
           <Swiper
             slidesPerView={4}
@@ -184,9 +252,9 @@ const Home = () => {
                   <h5 className="font-semibold text-xl py-5 ">
                     {text.user.fullName}
                   </h5>
-                  <p>Lorem ipsum dolor sit amet.</p>
+                  <p>Lorem ipsum dolor sit met.</p>
                   <div className="flex items-center gap-2 font-bold text-blue-gray-500">
-                    {text.raitng}
+                    {text.rating}
                     <Rating />
                     <Typography
                       color="blue-gray"
@@ -202,20 +270,23 @@ const Home = () => {
         </div>
 
         {/* pizza_card */}
-        <div className="grid grid-cols-3 gap-2 grid-rows-5">
+        <div className="grid grid-cols-4 gap-2 grid-rows-5">
           {FoodCard?.recipes?.map((food, index) => (
-            <div className="card  shadow-xl p-4 rounded-2xl" key={index}>
+            <div
+              className="card  shadow-xl p-4 rounded-2xl h-96 overflow-hidden "
+              key={index}
+            >
               <div className="box relative">
-                <img className="w-full h-auto object-cover" src={food?.image} />
-                <div className=" absolute bg-[#00000065] w-full h-full left-0 right-0 top-0 bottom-0"></div>
+                <img className="w-full h-44 object-cover" src={food?.image} />
+                <div className=" absolute bg-[#00000065] w-full h-full left-0 right-0 top-0 bottom-0 p-4"></div>
                 <div className=" absolute bottom-8 left-10">
                   <h3 className="text-white font-bold text-xl mb-4">
                     {food.name}
                   </h3>
                   <div className="flex justify-start gap-5">
                     <div className="flex items-center gap-2 font-bold text-white">
-                       {food.rating}
-                      {/* <Rating value={food?.raitng} /> */}
+                      {food.rating}
+                      {/* <Rating value={food?.rating} /> */}
                       <Typography
                         color="blue-gray"
                         className="font-medium text-blue-gray-500"
@@ -229,7 +300,6 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="flex gap-3 items-center justify-start mt-5">
-                    
                     <button className="bg-white py-2 px-4 font-semibold rounded-md text-gray-800 capitalize text-sm">
                       {food.tags[0]}
                     </button>
@@ -239,14 +309,13 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-
               <div className="flex justify-between">
                 <div className="ingredients_part py-10">
                   <h3 className="text-xl font-semibold text-gray-800 pb-5">
                     Ingredients
                   </h3>
                   <div className="">
-                    {food.ingredients.map((ingr, index) => (
+                    {food.ingredients.map((into, index) => (
                       <div
                         className="flex items-center mb-1.5 cursor-pointer"
                         key={index}
@@ -261,7 +330,7 @@ const Home = () => {
                           htmlFor="default-checkbox"
                           className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer"
                         >
-                          {ingr}
+                          {into}
                         </label>
                       </div>
                     ))}
@@ -280,7 +349,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="">
-                <h3>Instrctions</h3>
+                <h3>Instruction</h3>
                 <div className="">
                   {food.instructions.map((items, index) => (
                     <p
@@ -297,6 +366,33 @@ const Home = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Qut_part */}
+        <div className="py-10">
+          <div className="">
+            <h2 className="font-semibold text-3xl mx-auto flex justify-center ">
+              Lorem ipsum dolor sit, ame consectetur adi eit. Dolor, nisi!
+            </h2>
+            <p>Lorem ipsum dolor sit ame.</p>
+          </div>
+          <div className="container mx-auto py-10">
+            <div className="box_part grid grid-cols-4 grid-rows-2 gap-3">
+              {QutPart?.quotes?.map((text, index) => (
+                <div
+                  className="qut text-center bg-teal-100 p-8 rounded-xl"
+                  key={index}
+                >
+                  <p className="text-base font-medium font-sans">
+                    {text.quote}
+                  </p>
+                  <h2 className="font-semibold text-2xl font-sans py-2">
+                    {text.author}
+                  </h2>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Layout>
     </>

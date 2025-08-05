@@ -188,11 +188,33 @@ FoodCard:async()=>{
         }
     )
     return response
-}
+},
+
+QutPart:async()=>{
+    const headers = api.getheaders()
+    const response = await axios.get(
+        `${baseUrl}/quotes`,{
+            headers:{
+                ...Headers
+            }
+        }
+    )
+    return response
+},
 
 
+todPart:async()=>{
+  const header = api.getheaders()
+  const response  = await axios.get(
+    `${baseUrl}/todos`,{
+        headers:{
+            Headers
+       }
+    }
+  )
 
-
+return response
+},
 }
 
 export default api
